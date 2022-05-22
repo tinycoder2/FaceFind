@@ -1,0 +1,65 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section id="team" class="team section-bg">
+	<div class="container" style="padding-top: 25px;">
+
+		<div class="section-title">
+			<h2>List of Reported People</h2>
+			<p>To be matched etc etc</p>
+		</div>
+
+		<div class="row">
+
+			{% for object in reported_persons %}
+			<div class="col-lg-6" style="padding: 10px;">
+				<div class="member d-flex align-items-start">
+					<div class="rounded mx-auto d-block"><img src="{{object.photo.url}}" alt="" height="100"
+							width="100"></div>
+					<div class="member-info">
+						<h4>Reported on {{ object.created_date.date}}</h4>
+						<span>{{ object.description }}</span>
+						<p>Match Found? {{ object.is_matched_with_missing_person }}</p>
+						{% if object.face_id %}
+						<td>{{ object.matched_confindence }} <a
+								href="{% url 'show_found_person' object.matched_face_id%}">Details
+								Here!</a> </td>
+						{% else %}
+						<td>Nothing Found</td>
+
+						{% endif %}
+						<br>
+						<br>
+						<div class="">
+							<a href="{% url 'update_reported_person' object.pk%}" class="btn btn-sm btn-warning"
+								role="button">Edit</a> &nbsp
+							<a href="{% url 'delete_reported_person' object.pk%}" class="btn btn-sm btn-danger"
+								role="button"> Delete</a> &nbsp
+							<a href="{% url 'verify_reported_person' object.pk%}" class="btn btn-sm btn-success"
+								role="button"> Approve</a> &nbsp
+
+						</div>
+					</div>
+				</div>
+			</div>
+			{% empty %}
+			No objects yet.
+
+			{% endfor %}
+
+
+
+		</div>
+
+	</div>
+</section><!-- End Team Section -->
+<!-- 
+<a href="{% url 'index' %}" class="btn btn-sm btn-primary" role="button"><span class="icon_pencil-edit"></span> Home</a>
+&nbsp
+<a href="{% url 'create_reported_person' %}" class="btn btn-sm btn-secondary" role="button"><span
+		class="icon_pencil-edit"></span> Create</a> &nbsp -->
+
+
+{% endblock content %}

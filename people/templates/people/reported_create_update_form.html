@@ -1,0 +1,57 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section id="contact" class="contact">
+    <div class="container" style="padding-top: 25px;">
+
+        <div class="section-title">
+            <h2>Report a Missing Person</h2>
+            <p>Enter details of the person found. Make sure to upload a clear picture of the persons face.
+                blah blah verification etc
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+
+
+
+            <div class="col-lg-7 mt-5 mt-lg-0 d-flex ">
+                <form action="" method="post" class="" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <table class="table table-hover">
+                        <div class="row">
+                            {{ form.as_table }}
+                        </div>
+                    </table>
+
+
+                    <div class="text-center ">
+                        <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Submit">
+
+                    </div>
+                    <!-- <div class="text-center"><button type="submit">Send Message</button></div> -->
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- class="php-email-form" -->
+<!-- <div class="form-group">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <table class="table table-hover table-bordered">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" class="btn btn-success" value="Submit">
+        <button type="button" class="btn btn-danger" onclick="window.history.back();">Cancel</button>
+
+    </form>
+</div> -->
+{% endblock content %}

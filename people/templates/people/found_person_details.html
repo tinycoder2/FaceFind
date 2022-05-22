@@ -1,0 +1,51 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="team" class="team section-bg">
+    <div class="container" style="padding-top: 25px;">
+
+        <div class="section-title">
+            <h2>Potential match found!</h2>
+            <p> blah blah verification etc</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6" style="padding: 10px;">
+                <div class="member d-flex align-items-start">
+                    <div class="rounded mx-auto d-block"><img src="{{found_person_details.0.photo.url}}" alt=""
+                            height="250" width="250"></div>
+                    <div class="member-info">
+                        <h4>{{found_person_details.0.first_name}} {{found_person_details.0.last_name}}</h4>
+                        <span>Reported missing : {{found_person_details.0.created_date.date}}</span>
+                        <p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Age : {{found_person_details.0.age}}</li>
+                            <li class="list-group-item">Gender : {{found_person_details.0.gender}}</li>
+                            <li class="list-group-item">Last seen at : {{found_person_details.0.last_seen}}</li>
+                            <li class="list-group-item"> Description : {{found_person_details.0.description}}</li>
+                            <li class="list-group-item">Contact Person : {{found_person_details.0.contact_person}}</li>
+                            <li class="list-group-item">Contact Phone : {{found_person_details.0.phone}}</li>
+                        </ul>
+                        </p>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary">Contact</a>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+<!-- <br>
+<a href="{% url 'index' %}" class="btn btn-sm btn-primary" role="button"><span class="icon_pencil-edit"></span> Home</a>
+&nbsp -->
+{% endblock content %}
