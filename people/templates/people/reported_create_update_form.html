@@ -7,10 +7,16 @@
     <div class="container" style="padding-top: 25px;">
 
         <div class="section-title">
+            {%if object%}
+            <h2>Update a Reported Person</h2>
+
+            {%else %}
             <h2>Report a Missing Person</h2>
             <p>Enter details of the person found. Make sure to upload a clear picture of the persons face.
                 blah blah verification etc
             </p>
+            {%endif%}
+
         </div>
 
         <div class="row justify-content-center">

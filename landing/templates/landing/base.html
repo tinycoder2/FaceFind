@@ -32,7 +32,7 @@
     {% block head %}
     {% load static %}
     <!-- Favicons -->
-    <link href="{% static 'landing/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'landing/img/face2.png' %}" rel="icon">
 
     <link href="{% static 'landing/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
@@ -53,6 +53,9 @@
     <!-- Template Main CSS File -->
     <link href="{% static 'landing/css/style.css'%}" rel="stylesheet">
 
+    <!-- icons -->
+    <!-- <a href="https://storyset.com/web">Web illustrations by Storyset</a> -->
+
     <!-- =======================================================
     * Template Name: Arsha - v4.7.1
     * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
@@ -67,18 +70,14 @@
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'index' %}">FindR</a>
-    </nav> -->
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top " style="background-color: rgba(	55, 81, 126, 0.9);">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="{% url 'index' %}">FACE FIND</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo me-auto"><img src="{% static 'landing/img/logo.png" alt="" class="img-fluid"></a>-->
-
+            <h1 class="logo me-auto"><a href="{% url 'index' %}" class="logo me-auto"><img
+                        src="{% static 'landing/img/face2.png' %}" alt=""> FACE
+                    FIND</a></h1>
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto active" href="{% url 'index' %}#hero">Home</a></li>
@@ -108,7 +107,7 @@
 
     {% endblock content %}
 
-
+    <!-- back to top arrow -->
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

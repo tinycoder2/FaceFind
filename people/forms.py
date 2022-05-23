@@ -2,7 +2,7 @@
 from django import forms
 
 from people.models import MissingPerson, ReportedPerson
-
+#Forms for the missing person db
 class MissingPersonCreateForm(forms.ModelForm):
     # specify the name of model to use
     class Meta:
@@ -27,7 +27,7 @@ class MissingPersonVerifyForm(forms.ModelForm):
         fields = ['is_verified']
 
 
-
+#Forms for the reported person db
 class ReportedPersonCreateForm(forms.ModelForm):
     # specify the name of model to use
     class Meta:

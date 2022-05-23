@@ -28,8 +28,11 @@
 								role="button">Edit</a> &nbsp
 							<a href="{% url 'delete_missing_person' object.pk%}" class="btn btn-sm btn-danger"
 								role="button"> Delete</a> &nbsp
+
+							{%if not object.is_verified%}
 							<a href="{% url 'verify_missing_person' object.pk%}" class="btn btn-sm btn-success"
 								role="button"> Approve</a> &nbsp
+							{%endif%}
 
 						</div>
 					</div>
