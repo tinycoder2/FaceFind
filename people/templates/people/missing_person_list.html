@@ -8,7 +8,6 @@
 
 		<div class="section-title">
 			<h2>List of Missing People</h2>
-			<p>To be verified etc etc</p>
 		</div>
 
 		<div class="row">
@@ -20,7 +19,7 @@
 							width="100"></div>
 					<div class="member-info">
 						<h4>{{ object.first_name }}</h4>
-						<span>Last seen at {{ object.last_seen}}, {{ object.created_date.date}}</span>
+						<span>Last seen at {{ object.last_seen}}, Status : {{object.status}}</span>
 						<p>{{ object.description }}</p>
 						<br>
 						<div class="">
@@ -39,7 +38,7 @@
 				</div>
 			</div>
 			{% empty %}
-			No objects yet.
+			No entries available.
 
 			{% endfor %}
 
@@ -49,11 +48,6 @@
 
 	</div>
 </section><!-- End Team Section -->
-<!-- 
-<a href="{% url 'index' %}" class="btn btn-sm btn-primary" role="button"><span class="icon_pencil-edit"></span> Home</a>
-&nbsp
-<a href="{% url 'create_missing_person' %}" class="btn btn-sm btn-secondary" role="button"><span
-		class="icon_pencil-edit"></span> Create</a> &nbsp -->
 
 
 {% endblock content %}

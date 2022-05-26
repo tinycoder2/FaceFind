@@ -34,24 +34,29 @@ class MissingPerson(models.Model):
     # basic info fields
     first_name = models.CharField(verbose_name="Given Name", max_length=200, blank=False, null=False)
     last_name = models.CharField(verbose_name="Last Name", max_length=200, blank=False, null=False)
-    age = models.CharField(verbose_name="Age of Missing Person",max_length=200, blank=True, null=True, )
+    age = models.CharField(verbose_name="Age of Missing Person",max_length=200, blank=False, null=False, )
     gender = models.CharField(verbose_name="Gender of Missing Person", choices=GENDER_CATEGORY_CHOICES, max_length=200, blank=False, null=False)
     last_seen = models.CharField(verbose_name="Last Seen Location", max_length=200, blank=False, null=False)
-    description = models.TextField(verbose_name="Any Other Important Details",max_length=1000)
-    photo = models.ImageField(verbose_name="Upload Photo of Missing Person",upload_to="missingpersons/",  blank=True, null=True )
+    description = models.TextField(verbose_name="Any Other Important Details",max_length=1000, blank=True, null=True)
+    photo = models.ImageField(verbose_name="Upload Photo of Missing Person",upload_to="missingpersons/",  blank=False, null=False )
 
     # info of person to be contacted if missing person found
     contact_person = models.CharField(verbose_name="Contact Person", max_length=200, blank=False, null=False)
-    contact_relationship = models.CharField(verbose_name="Relationship with Missing Person", choices=RELATIONSHIP_CATEGORY_CHOICES, max_length=200, blank=False, null=False) 
-    phone = PhoneNumberField(verbose_name="Contact Number", null=True, blank=True, )
+    contact_relationship = models.CharField(verbose_name="Relationship with Missing Person", choices=RELATIONSHIP_CATEGORY_CHOICES, max_length=200, blank=False, null=False)
+    contact_email = models.EmailField(verbose_name="Contact Email ID",max_length=254, blank=False, null=False) 
+    phone = PhoneNumberField(verbose_name="Contact Number", null=False, blank=False, )
 
     # currents status of case ie new/leads/found/closed
-    status = models.CharField(verbose_name="Current Status", choices=CURRENT_STATUS_CHOICES, max_length=200, blank=False, null=False) 
+    status = models.CharField(verbose_name="Current Status", choices=CURRENT_STATUS_CHOICES, max_length=200, blank=False, null=False, default="New") 
    
     # fields used in AI face recognition
     is_verified = models.BooleanField(verbose_name="Person Background Check Done?", default=False)
     face_id = models.CharField(verbose_name="Face ID of Missing Person",max_length=200, blank=True, null=True, )
     
+    # if found, location from where the volunteer reported
+    found_location =  models.CharField(verbose_name="Found Location", max_length=200, blank=True, null=True)
+    found_time = models.DateTimeField( blank=True, null=True)
+    is_contacted = models.BooleanField(verbose_name="Contact person has been informed?", default=False)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -68,9 +73,9 @@ class MissingPerson(models.Model):
 
 class ReportedPerson(models.Model):
 
-    last_seen = models.CharField(verbose_name="Last Seen Location", max_length=200, blank=False, null=False)
-    description = models.TextField(verbose_name="Any Other Important Details",max_length=1000)
-    photo = models.ImageField(verbose_name="Upload Photo of Reported Person",upload_to="reportedpersons/")
+    reported_location = models.CharField(verbose_name="Found Location", max_length=200, blank=False, null=False)
+    description = models.TextField(verbose_name="Any Other Important Details",max_length=1000, blank=True, null=True)
+    photo = models.ImageField(verbose_name="Upload Photo of Reported Person",upload_to="reportedpersons/",  null=False, blank=False,)
 
     # fields used in AI face recognition
     is_verified = models.BooleanField(verbose_name="Is this valid reporting?", default=False)

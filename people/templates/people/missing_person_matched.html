@@ -1,0 +1,18 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="team" class="team section-bg">
+    <div class="container" style="padding-top: 25px;">
+
+        <div class="section-title">
+            <h2>Missing person has been matched!</h2>
+            <p> {{missing_person_object.first_name}}'s {{missing_person_object.contact_relationship}},
+                {{missing_person_object.contact_person}} will be contacted and informed shortly!</p>
+        </div>
+
+
+    </div>
+</section>
+
+{% endblock content %}

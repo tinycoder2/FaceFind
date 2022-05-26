@@ -53,7 +53,8 @@
     <!-- Template Main CSS File -->
     <link href="{% static 'landing/css/style.css'%}" rel="stylesheet">
 
-    <!-- icons -->
+    <!-- icons & illustration -->
+    <!-- <a href="https://icons8.com">Icons8</a> -->
     <!-- <a href="https://storyset.com/web">Web illustrations by Storyset</a> -->
 
     <!-- =======================================================
@@ -80,21 +81,54 @@
                     FIND</a></h1>
             <nav id="navbar" class="navbar">
                 <ul>
+                    {% if user.is_authenticated %}
+                    <!-- if user is admin show only home, register, views and logout links -->
                     <li><a class="nav-link scrollto active" href="{% url 'index' %}#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'index' %}#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'index' %}#services">Services</a></li>
 
-                    <li><a class="nav-link scrollto" href="{% url 'index' %}#faq">FAQ</a></li>
                     <li class="dropdown"><a href="#"><span>Register & Report</span> <i
                                 class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="{% url 'create_missing_person' %}">Register Missing Person</a></li>
-                            <li><a href="{% url 'list_missing_person' %}">View Missing Persons</a></li>
-                            <li><a href="{% url 'create_reported_person' %}">Register reported Person</a></li>
-                            <li><a href="{% url 'list_reported_person' %}">View Reported Persons</a></li>
+                            <li><a href="{% url 'create_reported_person' %}">Report Suspected Missing Person</a></li>
                         </ul>
                     </li>
-                    <li><a class="getstarted scrollto" href="{% url 'index' %}#about">Get Started</a></li>
+
+                    <li class="dropdown"><a href="#"><span>View Missing Persons</span> <i
+                                class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="{% url 'list_missing_person' %}">View All</a></li>
+                            <li><a href="{% url 'list_missing_person_to_be_verified' %}">To Be Approved</a></li>
+                            <li><a href="{% url 'list_missing_person_with_leads'%}">Leads</a></li>
+                            <li><a href="{%url 'list_missing_person_found'%}">Found</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#"><span>View Reported Persons</span> <i
+                                class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="{% url 'list_reported_person' %}">View All</a></li>
+                            <li><a href="{% url 'list_reported_person_to_be_verified' %}">To Be Approved</a></li>
+                            <li><a href="{% url 'list_reported_person_match_found' %}">Match Found</a></li>
+                            <li><a href="{% url 'list_reported_person_match_not_found' %}">Match Not Found</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a class="getstarted scrollto" href="{% url 'logout'%}">Logout</a></li>
+
+                    {% else %}
+
+                    <!-- if user is not admin show only home, about, services, register faq and login links -->
+                    <li><a class="nav-link scrollto" href="{% url 'index' %}#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'index' %}#services">Technology</a></li>
+                    <li class="dropdown"><a href="#"><span>Register & Report</span> <i
+                                class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="{% url 'create_missing_person' %}">Register Missing Person</a></li>
+                            <li><a href="{% url 'create_reported_person' %}">Report Suspected Missing Person</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'index' %}#faq">FAQ</a></li>
+                    <li><a class="getstarted scrollto" href="{% url 'login'%}">Login</a></li>
+                    {% endif %}
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->

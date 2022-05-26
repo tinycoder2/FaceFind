@@ -4,23 +4,20 @@ from django import forms
 from people.models import MissingPerson, ReportedPerson
 #Forms for the missing person db
 class MissingPersonCreateForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = MissingPerson
         # fields = "__all__"
-        exclude = ['status', 'is_verified', 'face_id']
+        exclude = ['status', 'is_verified', 'face_id', 'found_location', 'found_time', 'is_contacted']
 
 
 class MissingPersonUpdateForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = MissingPerson
-        exclude = ['face_id', 'is_verified']
+        exclude = ['face_id', 'is_verified', 'found_location']
         # fields = "__all__"
         
 
 class MissingPersonVerifyForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = MissingPerson
         # exclude = ['face_id']
@@ -29,15 +26,13 @@ class MissingPersonVerifyForm(forms.ModelForm):
 
 #Forms for the reported person db
 class ReportedPersonCreateForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = ReportedPerson
         # fields = "__all__"
-        exclude = ['is_verified', 'face_id']
+        exclude = ['is_verified', 'face_id','is_matched_with_missing_person','matched_confindence', 'matched_face_id' ]
 
 
 class ReportedPersonUpdateForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = ReportedPerson
         exclude = ['face_id']
@@ -45,7 +40,6 @@ class ReportedPersonUpdateForm(forms.ModelForm):
         
 
 class ReportedPersonVerifyForm(forms.ModelForm):
-    # specify the name of model to use
     class Meta:
         model = ReportedPerson
         # exclude = ['face_id']

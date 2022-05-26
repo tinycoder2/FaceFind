@@ -7,13 +7,13 @@
     <div class="container" style="padding-top: 25px;">
 
         <div class="section-title">
+            <!-- form is displayed as update only if object is already created -->
             {%if object%}
             <h2>Update a Reported Person</h2>
 
             {%else %}
             <h2>Report a Missing Person</h2>
             <p>Enter details of the person found. Make sure to upload a clear picture of the persons face.
-                blah blah verification etc
             </p>
             {%endif%}
 
@@ -39,7 +39,6 @@
                         <input type="submit" class="btn btn-success" value="Submit">
 
                     </div>
-                    <!-- <div class="text-center"><button type="submit">Send Message</button></div> -->
                 </form>
             </div>
 
@@ -47,17 +46,4 @@
 
     </div>
 </section>
-<!-- class="php-email-form" -->
-<!-- <div class="form-group">
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <table class="table table-hover table-bordered">
-            {{ form.as_table }}
-        </table>
-        <input type="submit" class="btn btn-success" value="Submit">
-        <button type="button" class="btn btn-danger" onclick="window.history.back();">Cancel</button>
-
-    </form>
-</div> -->
 {% endblock content %}

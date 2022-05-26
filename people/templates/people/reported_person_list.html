@@ -8,7 +8,6 @@
 
 		<div class="section-title">
 			<h2>List of Reported People</h2>
-			<p>To be matched etc etc</p>
 		</div>
 
 		<div class="row">
@@ -48,7 +47,7 @@
 				</div>
 			</div>
 			{% empty %}
-			No objects yet.
+			No entries available.
 
 			{% endfor %}
 
@@ -57,12 +56,7 @@
 		</div>
 
 	</div>
-</section><!-- End Team Section -->
-<!-- 
-<a href="{% url 'index' %}" class="btn btn-sm btn-primary" role="button"><span class="icon_pencil-edit"></span> Home</a>
-&nbsp
-<a href="{% url 'create_reported_person' %}" class="btn btn-sm btn-secondary" role="button"><span
-		class="icon_pencil-edit"></span> Create</a> &nbsp -->
+</section>
 
 
 {% endblock content %}

@@ -10,29 +10,63 @@ from people.models import MissingPerson, ReportedPerson
 from .forms import *
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import json
 
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.core.mail import send_mail
+
+# to get api credentials
 with open('./config.json', 'r') as f:
     config = json.load(f)
 
 
 ## MISSING PERSONS
 # view to list all missing people
-class MissingPersonListView(ListView):
+class MissingPersonListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = MissingPerson
     template_name = 'people/missing_person_list.html'
     context_object_name = "missing_persons"
+
+# to view list of all missing people who need to be approved/verified
+class MissingPersonToBeApprovedListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/missing_person_list.html'
+    context_object_name = 'missing_persons'
+    queryset = MissingPerson.objects.filter(is_verified=False)
+
+# to view list of all missing people with status as leads (possible match with a reported person)
+class MissingPersonWithLeadsListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/missing_person_list.html'
+    context_object_name = 'missing_persons'
+    queryset = MissingPerson.objects.filter(status='Leads')
+
+# to view list of all missing people who have been found
+class MissingPersonFoundListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/missing_person_list.html'
+    context_object_name = 'missing_persons'
+    queryset = MissingPerson.objects.filter(status='Found')
 
 # view to create a missing person
 class MissingPersonCreateView(CreateView):
     model = MissingPerson
     form_class = MissingPersonCreateForm
     template_name = 'people/create_update_form.html'
-    success_url = reverse_lazy ('list_missing_person')
+    success_url = reverse_lazy ('missing_person_form_success')
 
 # view to update a missing person
-class MisssingPersonUpdateView(UpdateView):
+class MisssingPersonUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = MissingPerson
     form_class = MissingPersonUpdateForm
     template_name = 'people/create_update_form.html'
@@ -57,10 +91,10 @@ def find_match(reported_face_id, missing_face_ids):
         )
     return matched_faces
 
-
-
 # view to verify a missing person (if background check is done)
-class MisssingPersonVerifyView(UpdateView):
+class MisssingPersonVerifyView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = MissingPerson
     form_class = MissingPersonVerifyForm
     template_name = 'people/create_update_form.html'
@@ -91,36 +125,68 @@ class MisssingPersonVerifyView(UpdateView):
                     self.object.save()
         return super().post(request, **kwargs)
 
-
 # view to delete a missing person
-class MisssingPersonDeleteView(DeleteView):
+class MisssingPersonDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = MissingPerson
     template_name = 'people/delete_form.html'
     success_url = reverse_lazy ('list_missing_person')
 
 ## REPORTED PERSONS
 # view to list all reported people
-class ReportedPersonListView(ListView):
+class ReportedPersonListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = ReportedPerson
     template_name = 'people/reported_person_list.html'
     context_object_name = "reported_persons"
-    
+
+# to view list of all reported people who need to be approved/verified
+class ReportedPersonToBeApprovedListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/reported_person_list.html'
+    context_object_name = 'reported_persons'
+    queryset = ReportedPerson.objects.filter(is_verified=False)
+
+# to view list of all reported people who have been matched with a missing person
+class ReportedPersonMatchedListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/reported_person_list.html'
+    context_object_name = 'reported_persons'
+    queryset = ReportedPerson.objects.filter(is_matched_with_missing_person=True)
+
+
+# to view list of all reported people who have not yet been matched with a missing person
+class ReportedPersonNotMatchedListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
+    template_name = 'people/reported_person_list.html'
+    context_object_name = 'reported_persons'
+    queryset = ReportedPerson.objects.filter(is_matched_with_missing_person=False, is_verified=True)
+
 # view to create reported people
 class ReportedPersonCreateView(CreateView):
     model = ReportedPerson
     form_class = ReportedPersonCreateForm
     template_name = 'people/reported_create_update_form.html'
-    success_url = reverse_lazy ('list_reported_person')
+    success_url = reverse_lazy ('reported_person_form_success')
 
 # view to update reported people
-class ReportedPersonUpdateView(UpdateView):
+class ReportedPersonUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = ReportedPerson
     form_class = ReportedPersonUpdateForm
     template_name = 'people/reported_create_update_form.html'
     success_url = reverse_lazy ('list_reported_person')
 
 # view to verify a reported person 
-class ReportedPersonVerifyView(UpdateView):
+class ReportedPersonVerifyView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = ReportedPerson
     form_class = ReportedPersonVerifyForm
     template_name = 'people/reported_create_update_form.html'
@@ -139,9 +205,8 @@ class ReportedPersonVerifyView(UpdateView):
                 print("face ID is",self.object.face_id)
                 
                 # to get a list of all face_ids of missing persons
-                missing_persons_face_ids = list(MissingPerson.objects.all().values_list('face_id', flat=True))
+                missing_persons_face_ids = list(MissingPerson.objects.filter(face_id__isnull=False).values_list('face_id', flat=True))
                 # missing_persons_names = list(MissingPerson.objects.all().values_list('first_name', flat=True))
-                
                 # db = dict(zip(missing_persons_names, missing_persons_face_ids))
 
                 # if the person is verified and does not already have a face id, we generate one
@@ -169,23 +234,32 @@ class ReportedPersonVerifyView(UpdateView):
                             
                             # getting the matched missing person
                             found_person = MissingPerson.objects.get(face_id = matched_faces[0].face_id)
+                            found_person.status="Leads"
+                            found_person.found_location=self.object.reported_location
+                            found_person.found_time=self.object.created_date
+                            
+                            found_person.save()
 
                             # Updating matched details to reported database
                             self.object.matched_face_id = matched_faces[0].face_id
                             self.object.is_matched_with_missing_person = True
-                            self.object.matched_confindence = "This could be " + found_person.first_name + "lost at " + found_person.last_seen + " reported by "+ found_person.contact_person +  " with confidence rate of" + str(matched_faces[0].confidence*100) +"%" 
+                            self.object.matched_confindence = "This could be " + found_person.first_name + " lost at " + found_person.last_seen + " reported by "+ found_person.contact_person +  " with confidence rate of " + str(matched_faces[0].confidence*100) +"%." 
                             self.object.save()
 
         return super().post(request, **kwargs)
 
 # view to delete reported person
-class ReportedPersonDeleteView(DeleteView):
+class ReportedPersonDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = ReportedPerson
     template_name = 'people/delete_form.html'
     success_url = reverse_lazy ('list_reported_person')
 
 # view to display matched/found person details
-class FoundPersonTemplateView(TemplateView):
+class FoundPersonTemplateView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('index')
+    logout_url = reverse_lazy('index')
     model = MissingPerson
     template_name = 'people/found_person_details.html'
     
@@ -195,4 +269,31 @@ class FoundPersonTemplateView(TemplateView):
         context['found_person_details'] = MissingPerson.objects.filter(face_id = self.kwargs['face_id'] )
         return context
 
+# view to display missing person has been successfully registered
+class MissingPersonFormSuccessView(TemplateView):
+    template_name= 'people/missing_person_form_success.html'
 
+# view to display reported person has been successfully registered
+class ReportedPersonFormSuccessView(TemplateView):
+    template_name= 'people/reported_person_form_success.html'
+
+# fuction to send contact person a mail
+def SendEmailToContact(object):
+    subject = f'We have found {object.first_name}!'
+    message = f'Hi {object.contact_person}, {object.first_name} {object.last_name} was reported to be found at {object.found_location} on {object.found_time}.'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [object.contact_email, ]
+    send_mail( subject, message, email_from, recipient_list )
+
+# function to set status as found and send email to contact person when "Confirm and match" button is clicked
+def missing_person_update_status(request, pk):
+    object = get_object_or_404(MissingPerson, pk=pk)
+    object.status = "Found"
+    # contacting the relative/guardian
+    SendEmailToContact(object)
+    object.is_contacted = True
+    object.save()
+    print("Email sent!")
+    context = {'missing_person_object': object}
+
+    return render(request, "people/missing_person_matched.html", context)
