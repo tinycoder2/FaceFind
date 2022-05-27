@@ -233,18 +233,36 @@ The app is now running at `http://127.0.0.1:8000/`
 ### Home Screen
 - Landing page displaying hero section, about section, technology used and FAQ section.
 
+https://user-images.githubusercontent.com/72341529/170797626-e4a6fc58-5665-435a-99a0-cff8b7e84a64.mp4
+
 ### Registering a Missing Person
 
+https://user-images.githubusercontent.com/72341529/170797691-54077207-c774-48f9-bcab-6db4be10e198.mp4
+
+
 ### Reporting a Suspected Missing Person
+
+https://user-images.githubusercontent.com/72341529/170797730-6b5c78b9-ab0f-4bf3-8237-7c6a5d64820c.mp4
 
 ### Admin Login and Views
 - Logging in as the admin and displaying site from admin POV.
 
+https://user-images.githubusercontent.com/72341529/170797751-4897c355-0f34-4d25-88ca-16e45019ddee.mp4
+
 ### Missing People Views
 - Viewing all missing people, ones that need to be approved, approving a missing person (background check), viewing missing people with status as Leads, status as Found,  Deleting a missing person, Editing the details of a missing person.
 
+https://user-images.githubusercontent.com/72341529/170797773-ac2bd097-2e3b-44dc-94b0-7c47003ecbcb.mp4
+
 ### Reported Person Views
 - Viewing all reported people, ones that need to be approved, approving a reported person (checking validity of report), viewing details of potential match, confirming the match, status of missing person changing from Leads to Found. 
+
+
+https://user-images.githubusercontent.com/72341529/170797791-7d0093a4-8dec-4f70-ba61-35aafb594007.mp4
+
+
+### Details of Match Found
+<img  src="screenshots/details_of_match.png"  alt="detailsOfMatchFound">
 
 ### Email Received
 <img  src="screenshots/email_received.png"  alt="emailReceived">
