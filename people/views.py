@@ -266,6 +266,8 @@ class FoundPersonTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
+        context['reported_person_details'] = ReportedPerson.objects.filter(matched_face_id = self.kwargs['face_id'] )
+        
         context['found_person_details'] = MissingPerson.objects.filter(face_id = self.kwargs['face_id'] )
         return context
 

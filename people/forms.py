@@ -13,7 +13,7 @@ class MissingPersonCreateForm(forms.ModelForm):
 class MissingPersonUpdateForm(forms.ModelForm):
     class Meta:
         model = MissingPerson
-        exclude = ['face_id', 'is_verified', 'found_location']
+        exclude = ['face_id', 'is_verified', 'found_location', 'found_time', 'is_contacted']
         # fields = "__all__"
         
 

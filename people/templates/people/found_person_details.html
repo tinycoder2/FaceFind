@@ -8,13 +8,19 @@
 
         <div class="section-title">
             <h2>Potential match found!</h2>
+
+
         </div>
 
         <div class="row justify-content-center">
             <div class="col-lg-6" style="padding: 10px;">
                 <div class="member d-flex align-items-start">
-                    <div class="rounded mx-auto d-block"><img src="{{found_person_details.0.photo.url}}" alt=""
-                            class="img-fluid"></div>
+                    <div class="rounded mx-auto d-block" style="text-align: center;"><img
+                            src="{{found_person_details.0.photo.url}}" alt="" class="img-fluid"> Registered Image
+                        <br><br>
+                        <img src="{{reported_person_details.0.photo.url}}" alt="" class="img-fluid">
+                        Reported Image
+                    </div><br>
                     <div class="member-info">
                         <h4>{{found_person_details.0.first_name}} {{found_person_details.0.last_name}}</h4>
                         <span>Last seen at : {{found_person_details.0.last_seen}}</span>
