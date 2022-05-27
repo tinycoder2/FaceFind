@@ -1,0 +1,6 @@
+{
+    "KEY": "Your Azure API KEY",
+    "ENDPOINT": "Your Azure Endpoint",
+    "EMAIL-ID": "Your Email ID from which the app will contact if missing person is found",
+    "EMAIL-PASSWORD": "Password for said Email ID"
+}

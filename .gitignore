@@ -6,7 +6,6 @@ __pycache__
 msengage.sqlite3
 static
 media
-config.json
 # Environments 
 .env 
 .venv 
