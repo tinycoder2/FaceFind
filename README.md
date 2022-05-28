@@ -1,4 +1,5 @@
 
+
   
   
 
@@ -20,6 +21,7 @@
 
 A Django web application to help find missing people using face recognition.
 
+  Now deployed on Heroku! Click [here](https://facefindxyz.herokuapp.com/) to check it out!
 <br />
 
   
@@ -173,7 +175,14 @@ pip install -r requirements.txt
 
 To allow the app access your email account, go to [google account setting](https://myaccount.google.com/intro/security?hl=en) , security tab and ensure that you have *Less secure app access* turned *on.*
 
-6. Apply migrations:
+6. Go to `msengage\settings.py` and change line number 18 as,
+
+```py
+# Change to False if cloning and running on local host
+IS_DEPLOYED_ON_HEROKU =  False
+```
+
+7. Apply migrations:
 
 ```sh
 
@@ -181,7 +190,7 @@ python manage.py migrate
 
 ```
 
-7. Create admin account :
+8. Create admin account :
 
 ```sh
 
@@ -191,7 +200,7 @@ python manage.py createsuperuser
 
 Follow the promt and enter the username, preferably *"admin"*, desired email and password. Make note of the username and password as you will have to use these credentials to login.
 
-8. Run server:
+9. Run server:
 
 ```sh
 
