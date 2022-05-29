@@ -340,7 +340,7 @@ return matched_faces
 
 ```
 
-- Given the timeframe for this project and the fact that I was using a free account with limited number of API calls, I have built my **MVP ** with these two APIs.
+- Given the timeframe for this project and the fact that I was using a free account with limited number of API calls, I have built my **MVP** with these two APIs.
 
 - In the future I plan to make use of a `faceListId` instead of the `faceID array` for the [Face - Find Similar API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/findsimilar).
 
