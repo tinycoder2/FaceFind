@@ -19,7 +19,7 @@
 
 <p align="center">
 
-A Django web application to help find missing people using face recognition.
+A Django Web Application to help find missing people using Face Recognition.
 
   Now deployed on Heroku! Click [here](https://facefindxyz.herokuapp.com/) to check it out!
 <br />
