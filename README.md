@@ -75,7 +75,7 @@ The thought of a family member, a friend or someone else you care about going mi
 <p align="right">(<a  href="#top">back to top</a>)</p>
 
 ###  Built With
-To achieve our goal of finding missing people, we make use of the following tools and languages,
+To achieve the goal of finding missing people, I made use of the following tools and languages,
 <p align="left">
 <a  href="https://getbootstrap.com"  target="_blank"><img  src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg"  alt="bootstrap"  width="40"  height="40"/> </a>
 <a  href="https://www.w3schools.com/css/"  target="_blank"> <img  src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"  alt="css3"  width="40"  height="40"/> </a>
