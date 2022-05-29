@@ -1,8 +1,5 @@
 
 
-  
-  
-
 <!-- PROJECT LOGO -->
 
 <br />
@@ -114,99 +111,76 @@ _To get a local copy of the project and run it, follow these steps._
 
 1. Create a folder in which you want set up the project. Go into that folder and check if python is installed.
 
-```sh
-mkdir myFolder
-cd myFolder
-python --version
+  ```sh
+  mkdir myFolder
+  cd myFolder
+  python --version
 
-```
+  ```
 
 2. Clone the repository:
 
-```sh
-
-git clone https://github.com/tinycoder2/FaceFind.git
-
-```
+  ```sh
+  git clone https://github.com/tinycoder2/FaceFind.git
+  ```
 
 3. Create a virtual environment to install dependencies in and activate it:
 
-```sh
-
-python -m venv myEnv
-
-cd myEnv
-
-.\Scripts\activate
-
-cd ..
-
-```
+  ```sh
+  python -m venv myEnv
+  cd myEnv
+  .\Scripts\activate
+  cd ..
+  ```
 
 4. Then install the dependencies:
 
-```sh
-
-cd FaceFind
-
-pip install -r requirements.txt
-
-```
+  ```sh
+  cd FaceFind
+  pip install -r requirements.txt
+  ```
 
   
 
 5. Enter your API KEY, ENDPOINT that we got from <a  href="#credentials">Getting API credentials</a>, EMAIL ID and EMAIL PASSWORD in `config.json`
 
-```json
-
-{
-
-"KEY": "Your Azure API KEY",
-
-"ENDPOINT": "Your Azure Endpoint",
-
-"EMAIL-ID": "Your Email ID from which the app will contact is missing person is found",
-
-"EMAIL-PASSWORD": "Password for said Email ID"
-
-}
-
-```
+  ```json
+  {
+    "KEY": "Your Azure API KEY",
+    "ENDPOINT": "Your Azure Endpoint",
+    "EMAIL-ID": "Your Email ID from which the app will contact is missing person is found",
+    "EMAIL-PASSWORD": "Password for said Email ID"
+  }
+  ```
 
 To allow the app access your email account, go to [google account setting](https://myaccount.google.com/intro/security?hl=en) , security tab and ensure that you have *Less secure app access* turned *on.*
 
 6. Go to `msengage\settings.py` and change line number 18 as,
 
-```py
-# Change to False if cloning and running on local host
-IS_DEPLOYED_ON_HEROKU =  False
-```
+  ```py
+  # Change to False if cloning and running on local host
+  IS_DEPLOYED_ON_HEROKU =  False
+  ```
 
 7. Apply migrations:
 
-```sh
-
-python manage.py migrate
-
-```
+  ```sh
+  python manage.py migrate
+  ```
 
 8. Create admin account :
 
-```sh
-
-python manage.py createsuperuser
-
-```
+  ```sh
+  python manage.py createsuperuser
+  ```
 
 Follow the promt and enter the username, preferably *"admin"*, desired email and password. Make note of the username and password as you will have to use these credentials to login.
 
 9. Run server:
 
-```sh
-
-python manage.py runserver
-
-```
+  ```sh
+  python manage.py runserver
+  ```
 
 The app is now running at `http://127.0.0.1:8000/`
 
@@ -288,57 +262,41 @@ https://user-images.githubusercontent.com/72341529/170797791-7d0093a4-8dec-4f70-
 
 - Face Detection
 
-- To detect the face in the image the person uploads, we use the [Detect With Stream API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/detect-with-stream).
+  - To detect the face in the image the person uploads, we use the [Detect With Stream API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/detect-with-stream).
 
-- In `people\views.py` we have a function `generate_face_id` that uses the Detect With Stream API to get the faceID, which is an identifier of the face feature and will be used in [Face - Find Similar](https://docs.microsoft.com/en-us/rest/api/faceapi/face/findsimilar).
+  - In `people\views.py` we have a function `generate_face_id` that uses the Detect With Stream API to get the faceID, which is an identifier of the face feature and will be used in [Face - Find Similar](https://docs.microsoft.com/en-us/rest/api/faceapi/face/findsimilar).
 
-```py
+  ```py
 
-# function to generate face_id using Azure Face API
+  # function to generate face_id using Azure Face API
 
-def  generate_face_id(image_path):
+  def  generate_face_id(image_path):
+    face_client =  FaceClient(config['ENDPOINT'], CognitiveServicesCredentials(config['KEY']))
+    response_detected_face = face_client.face.detect_with_stream(
+    image=open(image_path, 'rb'),
+    detection_model='detection_03',
+    recognition_model='recognition_04',
+  )
+  return response_detected_face
 
-  face_client =  FaceClient(config['ENDPOINT'], CognitiveServicesCredentials(config['KEY']))
-
-  response_detected_face = face_client.face.detect_with_stream(
-
-  image=open(image_path, 'rb'),
-
-  detection_model='detection_03',
-
-  recognition_model='recognition_04',
-
-)
-
-return response_detected_face
-
-```
+  ```
 
 - Face Recognition
 
-- Given query face's faceID, to search the similar-looking faces from a `faceID array`, which is an array of faceIDs generated from [Detect With Stream API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/detect-with-stream), we use the [Face - Find Similar API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/findsimilar).
+  - Given query face's faceID, to search the similar-looking faces from a `faceID array`, which is an array of faceIDs generated from [Detect With Stream API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/detect-with-stream), we use the [Face - Find Similar API](https://docs.microsoft.com/en-us/rest/api/faceapi/face/findsimilar).
 
-- In `people\views.py` we have a function `find_match` that uses this API to find a match for the reported person from the list of missing people faceIDs.
+  - In `people\views.py` we have a function `find_match` that uses this API to find a match for the reported person from the list of missing people faceIDs.
 
-```py
-
-# function to find a match for the reported person from the list of missing people using Azure Face API
-
-def  find_match(reported_face_id, missing_face_ids):
-
-  face_client =  FaceClient(config['ENDPOINT'], CognitiveServicesCredentials(config['KEY']))
-
-  matched_faces = face_client.face.find_similar(
-
-  face_id=reported_face_id,
-
-  face_ids=missing_face_ids
-
-)
-
-return matched_faces
-
-```
+  ```py
+  # function to find a match for the reported person from the list of missing people using Azure Face API
+  def  find_match(reported_face_id, missing_face_ids):
+    face_client =  FaceClient(config['ENDPOINT'], CognitiveServicesCredentials(config['KEY']))
+    matched_faces = face_client.face.find_similar(
+    face_id=reported_face_id,
+    face_ids=missing_face_id
+  )
+  return matched_faces
+  ```
 
 - Given the timeframe for this project and the fact that I was using a free account with limited number of API calls, I have built my **MVP** with these two APIs.
 
